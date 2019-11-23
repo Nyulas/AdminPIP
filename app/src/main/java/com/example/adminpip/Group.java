@@ -4,6 +4,7 @@ public class Group {
 
     private String name;
     private int ID;
+    //ez
     private Question question;
 
     public Group(){
