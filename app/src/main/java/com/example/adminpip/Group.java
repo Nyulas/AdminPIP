@@ -1,21 +1,24 @@
 package com.example.adminpip;
 
-import java.util.ArrayList;
-
 public class Group {
 
-    public String name;
-    public int ID;
-   // public ArrayList<Question> questions;
+    private String name;
+    private int ID;
+    private Question question;
 
     public Group(){
 
     }
 
-    public Group(String name, int ID){//, ArrayList<Question> questions) {
+    public Group(String name, int ID, Question question) {
         this.name = name;
         this.ID = ID;
-      //  this.questions = questions;
+        this.question = question;
+    }
+
+    public Group(String name,int ID){
+        this.name = name;
+        this.ID = ID;
     }
 
     public String getName() {
@@ -34,7 +37,11 @@ public class Group {
         this.ID = ID;
     }
 
-    /*public void addQuestion(Question question){
-        questions.add(question);
-    }*/
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
 }

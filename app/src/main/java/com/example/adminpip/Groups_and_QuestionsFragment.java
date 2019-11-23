@@ -44,10 +44,13 @@ public class Groups_and_QuestionsFragment extends Fragment {
     Button CreateGroup_BT,AddQuestion_BT;
     private com.google.firebase.database.DatabaseReference mDatabase;
     private com.google.firebase.database.DatabaseReference mDatabase2;
+    private com.google.firebase.database.DatabaseReference groupReff;
     Question question;
+    Group group;
+    String GroupName;
     RecyclerView recyclerView;
     ArrayList<Question> questionList;
-    ArrayList<Question> activeQuestions;
+    Question activeQuestion;
     RecyclerViewAdaptor recyclerViewAdaptor;
 
     public Groups_and_QuestionsFragment() {
@@ -90,23 +93,26 @@ public class Groups_and_QuestionsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
 
         questionList = new ArrayList<Question>();
-        activeQuestions = new ArrayList<Question>();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase2 = FirebaseDatabase.getInstance().getReference().child("admin").child("questions");
+        groupReff = FirebaseDatabase.getInstance().getReference().child("admin").child("groups");
 
         CreateGroup_ET = view.findViewById(R.id.CreateGroup_ET);
         CreateGroup_BT = view.findViewById(R.id.CreateGroup_BT);
 
+        getGroups();
         listQuestions();
 
         CreateGroup_BT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String GroupName = CreateGroup_ET.getText().toString();
+                GroupName = CreateGroup_ET.getText().toString();
                 int random = new Random().nextInt(61) + 20;
 
-                mDatabase.child("admin").child("groups").child(GroupName).setValue(random);
+                group = new Group(GroupName,random);
+
+                mDatabase.child("admin").child("groups").child(GroupName).setValue(group);
             }
         });
 
@@ -142,7 +148,13 @@ public class Groups_and_QuestionsFragment extends Fragment {
                 {
                     Question q = iterator.getValue(Question.class);
                     questionList.add(q);
-                    //Log.d("uzenet",q.getQuestion());
+
+                    if(q.getState() == true)
+                    {
+                        Log.d("uzenet", "onDataChange: ");
+                        group.setQuestion(q);
+                        refreshGroup();
+                    }
                 }
                 recyclerViewAdaptor = new RecyclerViewAdaptor(getContext(),questionList);
                 recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
@@ -155,5 +167,29 @@ public class Groups_and_QuestionsFragment extends Fragment {
         });
     }
 
+    public void refreshGroup(){
+        mDatabase.child("admin").child("groups").child(GroupName).setValue(group);
+    }
 
+    public void getGroups(){
+
+        groupReff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot iterator : dataSnapshot.getChildren())
+                {
+                    Group g = iterator.getValue(Group.class);
+                    GroupName = g.getName();
+                    group = g;
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+    }
 }
