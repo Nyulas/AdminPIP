@@ -52,6 +52,7 @@ public class Groups_and_QuestionsFragment extends Fragment {
     ArrayList<Question> questionList;
     Question activeQuestion;
     RecyclerViewAdaptor recyclerViewAdaptor;
+    EditText selectedGroup;
 
     public Groups_and_QuestionsFragment() {
         // Required empty public constructor
@@ -65,7 +66,6 @@ public class Groups_and_QuestionsFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment Groups_and_QuestionsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static Groups_and_QuestionsFragment newInstance(String param1, String param2) {
         Groups_and_QuestionsFragment fragment = new Groups_and_QuestionsFragment();
         Bundle args = new Bundle();
@@ -101,7 +101,6 @@ public class Groups_and_QuestionsFragment extends Fragment {
         CreateGroup_ET = view.findViewById(R.id.CreateGroup_ET);
         CreateGroup_BT = view.findViewById(R.id.CreateGroup_BT);
 
-        getGroups();
         listQuestions();
 
         CreateGroup_BT.setOnClickListener(new View.OnClickListener() {
@@ -133,12 +132,11 @@ public class Groups_and_QuestionsFragment extends Fragment {
             }
         });
 
-
-
         return view;
     }
 
     public void listQuestions(){
+
 
         mDatabase2.addValueEventListener(new ValueEventListener() {
             @Override
@@ -151,14 +149,15 @@ public class Groups_and_QuestionsFragment extends Fragment {
 
                     if(q.getState() == true)
                     {
-                        Log.d("uzenet", "onDataChange: ");
-                        group.setQuestion(q);
-                        refreshGroup();
+                        groupReff.child(q.getGroup()).child("question").setValue(q);
+                        //refreshGroup();
+
                     }
                 }
                 recyclerViewAdaptor = new RecyclerViewAdaptor(getContext(),questionList);
                 recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
                 recyclerView.setAdapter(recyclerViewAdaptor);
+
             }
 
             @Override
@@ -166,30 +165,5 @@ public class Groups_and_QuestionsFragment extends Fragment {
             }
         });
     }
-
-    public void refreshGroup(){
-        mDatabase.child("admin").child("groups").child(GroupName).setValue(group);
-    }
-
-    public void getGroups(){
-
-        groupReff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot iterator : dataSnapshot.getChildren())
-                {
-                    Group g = iterator.getValue(Group.class);
-                    GroupName = g.getName();
-                    group = g;
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        });
-    }
+    
 }

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="49dp"
         android:layout_marginTop="23dp"
         android:text="Question"
         android:textColor="#000"
@@ -22,12 +22,26 @@
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="81dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="87dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="13dp"
         android:layout_toEndOf="@+id/Question_id"
-        android:text="Enable" />
+        android:text="Active" />
+
+    <EditText
+        android:id="@+id/Selected_Group_ET"
+        android:layout_width="147dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="7dp"
+        android:layout_toEndOf="@+id/State_SW"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="group to add"
+        android:textColor="#000"
+        android:textSize="15sp" />
 
 
 </RelativeLayout>

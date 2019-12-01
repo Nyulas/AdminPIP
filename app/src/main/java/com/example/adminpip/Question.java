@@ -4,6 +4,7 @@ public class Question {
 
     private String Question;
     private boolean State;
+    private String Group;
 
     public Question(String question,boolean state) {
         this.Question = question;
@@ -25,4 +26,11 @@ public class Question {
         Question = question;
     }
 
+    public String getGroup() {
+        return Group;
+    }
+
+    public void setGroup(String group) {
+        Group = group;
+    }
 }
