@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/votes_layout"
+    >
+
+    <TextView
+        android:id="@+id/Name_ET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="30dp"
+        android:text="Name"
+        android:textColor="#000"
+        android:textSize="15sp"
+        />
+
+    <TextView
+        android:id="@+id/Votevalue_ET"
+        android:layout_width="89dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="45dp"
+        android:text="Vote"
+        android:textColor="#000"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/Answeredquestion_ET"
+        android:layout_width="89dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="39dp"
+        android:layout_toStartOf="@+id/Votevalue_ET"
+        android:layout_toEndOf="@+id/Name_ET"
+        android:text="Question"
+        android:textColor="#000"
+        android:textSize="15sp" />
+</RelativeLayout>
