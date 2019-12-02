@@ -53,7 +53,9 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        Log.d(TAG,"onBindViewHolder: Called");
+        Log.d(TAG, "onBindViewHolder: Called");
+
+        holder.State.setChecked(Question.get(position).getState());
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
