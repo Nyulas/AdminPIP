@@ -168,7 +168,6 @@ public class Groups_and_QuestionsFragment extends Fragment {
                     if(q.getState() == true)
                     {
                         groupReff.child(q.getGroup()).child("question").setValue(q);
-                        //refreshGroup();
 
                     }
                 }

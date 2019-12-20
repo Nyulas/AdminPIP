@@ -3,7 +3,6 @@ package com.example.adminpip;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,7 +32,8 @@ public class LoginFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private com.google.firebase.database.DatabaseReference mDatabase;
-    EditText username_et;
+    EditText username_ET;
+    EditText password_ET;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -73,7 +74,9 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        username_et = view.findViewById(R.id.Username_ET);
+        username_ET = view.findViewById(R.id.Username_ET);
+        password_ET = view.findViewById(R.id.password_ET);
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
@@ -84,16 +87,26 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String username = username_et.getText().toString();
+                String username = username_ET.getText().toString();
+                String password = password_ET.getText().toString();
+                
+                if(username.equals(""))
+                {
+                    Toast.makeText(getContext(),"please add username",Toast.LENGTH_SHORT).show();
+                }
+                else if(password.equals(""))
+                {
+                    Toast.makeText(getContext(),"please add password",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Groups_and_QuestionsFragment fragment = new Groups_and_QuestionsFragment();
 
-               // mDatabase.child("admin").push().setValue(1);
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fg_placeholder,fragment,"GAQ_fragment");
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
 
-                Groups_and_QuestionsFragment fragment = new Groups_and_QuestionsFragment();
-
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fg_placeholder,fragment,"GAQ_fragment");
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                }
             }
         });
 

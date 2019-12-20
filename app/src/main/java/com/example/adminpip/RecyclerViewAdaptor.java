@@ -32,7 +32,7 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
     List<Question> Question;
     Context mContext;
     private com.google.firebase.database.DatabaseReference mDatabase;
-    private String selected_group;
+    private String selected_group="";
 
 
     public RecyclerViewAdaptor(Context mContext, List<Question>Question)
@@ -65,11 +65,15 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
                     public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
                         if(isChecked == true)
                         {
-                            Question.get(position).setState(true);
-                            Question.get(position).setGroup(selected_group);
-                            Log.d("uzenet", "onCheckedChanged: ");
-                            mDatabase.child("admin").child("questions").child(Question.get(position).getQuestion()).setValue(Question.get(position));
-
+                            if(selected_group.equals("")) {
+                                Question.get(position).setState(false);
+                                Toast.makeText(mContext,"please add a group where to put the message!",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Question.get(position).setState(true);
+                                Question.get(position).setGroup(selected_group);
+                                mDatabase.child("admin").child("questions").child(Question.get(position).getQuestion()).setValue(Question.get(position));
+                            }
                         }
                         else {
                             Question.get(position).setState(false);
